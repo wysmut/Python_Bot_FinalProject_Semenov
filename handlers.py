@@ -122,7 +122,6 @@ async def edit_ad(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def edit_ad_action(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text
-    # Используем регулярное выражение для обработки команды с пробелами/без
     match = re.match(r'^/edit_ad\s*(\d+)$', text)
     if not match:
         await update.message.reply_text("Неверный формат. Используйте: /edit_ad [ID]")
@@ -209,7 +208,7 @@ async def delete_ad(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ad = get_ad_details(ad_id)
     
     if ad and ad[1] == user[0]:
-        if delete_ad_db(ad_id):  # Используем исправленную функцию
+        if delete_ad_db(ad_id): 
             await update.message.reply_text("Объявление удалено")
         else:
             await update.message.reply_text("Ошибка при удалении")
@@ -267,7 +266,6 @@ async def process_next_filter(update: Update, context: ContextTypes.DEFAULT_TYPE
         await update.message.reply_text("Введите местонахождение:")
         return SEARCH_STATE_LOCATION
     elif filter_type == '3':
-        # Изменено: разрешаем ввод одного числа
         await update.message.reply_text("Введите стоимость аренды (одно число):")
         return SEARCH_STATE_PRICE
 
@@ -281,7 +279,6 @@ async def search_ads_location(update: Update, context: ContextTypes.DEFAULT_TYPE
 
 async def search_ads_price(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
-        # Изменено: принимаем одно число
         price = float(update.message.text)
         context.user_data['min_price'] = price
         context.user_data['max_price'] = price
@@ -312,7 +309,6 @@ async def perform_search(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         response = "Результаты поиска:\n\n"
         for ad in results:
-            # Добавляем контактную информацию
             response += (
                 f"ID: {ad[0]}\n"
                 f"Товар: {ad[2]}\n"
@@ -340,7 +336,7 @@ async def reviews_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         response = "Отзывы о боте:\n\n"
         for review in reviews:
-            response += f"- {review[4]}\n"  # text
+            response += f"- {review[4]}\n"  
         await update.message.reply_text(response)
 
 async def reviews_ad(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -356,7 +352,7 @@ async def reviews_ad(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         response = f"Отзывы о товаре (ID: {ad_id}):\n\n"
         for review in reviews:
-            response += f"- {review[4]}\n"  # text
+            response += f"- {review[4]}\n" 
         await update.message.reply_text(response)
 
 # ===== Обратная связь =====
