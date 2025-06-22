@@ -123,9 +123,7 @@ def update_ad_field(ad_id, field_num, new_value):
     ) is not None
 
 def delete_ad_db(ad_id):
-    # Сначала удаляем все связанные отзывы
     execute_query("DELETE FROM reviews WHERE ad_id = %s", (ad_id,))
-    # Затем удаляем само объявление
     return execute_query("DELETE FROM ads WHERE id = %s", (ad_id,)) is not None
 
 def create_search(user_id, keyword=None, location=None, min_price=None, max_price=None):
@@ -159,7 +157,6 @@ def search_ads_in_db(keyword=None, location=None, min_price=None, max_price=None
         params.append(f'%{location}%')
     
     if min_price is not None and max_price is not None:
-        # Ищем по точному совпадению, так как min_price = max_price
         conditions.append("price = %s")
         params.append(min_price)
     
