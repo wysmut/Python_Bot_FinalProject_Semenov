@@ -4,8 +4,6 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 from dotenv import load_dotenv
 from handlers import *
 from utils import init_db
-#testtt
-
 
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
